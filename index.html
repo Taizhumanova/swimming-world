@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Swimming World — Мир плавания</title>
+    <meta
+      name="description"
+      content="Swimming World — твой спортивный дневник, тренировки, достижения и мир плавания."
+    />
+
+    <style>
+      :root {
+        --bg: #031326;
+        --bg2: #061d35;
+        --card: #092844;
+        --cyan: #26d5ff;
+        --blue: #087eaf;
+        --text: #f2f9ff;
+        --muted: #aac4d9;
+        --border: rgba(69, 204, 255, 0.22);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 85px;
+      }
+      body {
+        font-family: Inter, Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      .container {
+        width: min(1160px, 92%);
+        margin: auto;
+      }
+      section {
+        padding: 76px 0;
+      }
+      .section-heading {
+        margin-bottom: 32px;
+      }
+      .section-heading h2 {
+        font-size: clamp(27px, 4vw, 38px);
+        line-height: 1.2;
+      }
+      .section-heading p {
+        color: var(--muted);
+        margin-top: 10px;
+        max-width: 680px;
+      }
+      .eyebrow {
+        color: var(--cyan);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .accent {
+        color: var(--cyan);
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 20px;
+        border-radius: 999px;
+        border: 1px solid var(--cyan);
+        color: white;
+        background: transparent;
+        font-weight: 700;
+        transition: 0.25s;
+        cursor: pointer;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 7px 25px #13c9ff28;
+      }
+      .btn-primary {
+        color: #002238;
+        background: var(--cyan);
+      }
+      .btn-small {
+        padding: 8px 14px;
+        font-size: 13px;
+      }
+      .btn-danger {
+        border-color: #ff778a;
+        color: #ffb6c0;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(2, 17, 33, 0.94);
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav {
+        min-height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 900;
+        line-height: 1.1;
+      }
+      .logo-icon {
+        font-size: 30px;
+        color: var(--cyan);
+      }
+      .logo span:last-child {
+        font-size: 17px;
+      }
+      .nav-links {
+        display: flex;
+        gap: 21px;
+        align-items: center;
+      }
+      .nav-links a {
+        color: #d1e5f4;
+        font-size: 13px;
+        transition: 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--cyan);
+      }
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+      }
+      .menu-toggle {
+        display: none;
+        background: transparent;
+        color: white;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 8px 12px;
+      }
+      .hero {
+        min-height: 500px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(
+            90deg,
+            rgba(2, 15, 31, 0.96) 0%,
+            rgba(2, 15, 31, 0.72) 43%,
+            rgba(2, 15, 31, 0.13) 100%
+          ),
+          url('https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=2000&q=90')
+            center 45% / cover;
+      }
+      .hero::after {
+        content: '';
+        position: absolute;
+        inset: auto 0 0;
+        height: 110px;
+        background: linear-gradient(transparent, var(--bg));
+      }
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 650px;
+        padding: 85px 0 110px;
+      }
+      .hero h1 {
+        font-size: clamp(43px, 7vw, 76px);
+        line-height: 0.98;
+        font-weight: 950;
+        letter-spacing: -2px;
+      }
+      .hero h1 span {
+        color: var(--cyan);
+      }
+      .hero-subtitle {
+        font-size: clamp(18px, 2.5vw, 24px);
+        font-weight: 700;
+        margin: 22px 0 12px;
+      }
+      .hero p {
+        color: #d4e9f8;
+        max-width: 490px;
+      }
+      .hero-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 27px;
+      }
+      .stats-strip {
+        position: relative;
+        z-index: 2;
+        margin-top: -35px;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+      .stat-card {
+        background: #062440;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 19px;
+        text-align: center;
+      }
+      .stat-card strong {
+        display: block;
+        color: var(--cyan);
+        font-size: 27px;
+      }
+      .stat-card span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+      .card {
+        background: linear-gradient(145deg, #0b2d4b, #061c32);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+        transition: transform 0.25s, border-color 0.25s;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        border-color: #28d7ff80;
+      }
+      .card-body {
+        padding: 21px;
+      }
+      .card h3 {
+        font-size: 19px;
+        margin-bottom: 8px;
+      }
+      .card p {
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .card-img {
+        width: 100%;
+        height: 205px;
+        object-fit: cover;
+      }
+      .icon-box {
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        background: #0b5478;
+        color: var(--cyan);
+        font-size: 24px;
+        margin-bottom: 17px;
+      }
+      .about-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+      }
+      .about-image {
+        height: 380px;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 22px;
+        border: 1px solid var(--border);
+      }
+      .check-list {
+        list-style: none;
+        margin: 20px 0;
+      }
+      .check-list li {
+        padding: 8px 0;
+        color: #d9eaf5;
+      }
+      .check-list li::before {
+        content: '✓';
+        color: var(--cyan);
+        margin-right: 10px;
+        font-weight: bold;
+      }
+      .styles-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+      .style-card {
+        position: relative;
+      }
+      .style-card .card-img {
+        height: 180px;
+      }
+      .style-number {
+        color: var(--cyan);
+        font-size: 12px;
+        letter-spacing: 1px;
+        font-weight: 800;
+      }
+      .tag {
+        display: inline-block;
+        border: 1px solid var(--border);
+        color: var(--cyan);
+        border-radius: 30px;
+        padding: 4px 10px;
+        font-size: 11px;
+        margin-bottom: 9px;
+      }
+      .split-section {
+        background: #061c32;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+      .two-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 45px;
+      }
+      .mini-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .mini-card {
+        padding: 17px;
+        border-radius: 14px;
+        background: #092b49;
+        border: 1px solid var(--border);
+      }
+      .mini-card strong {
+        display: block;
+        margin-bottom: 5px;
+      }
+      .mini-card p {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .panel {
+        background: linear-gradient(145deg, #0b2d4b, #061b30);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 25px;
+      }
+      .plans-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+      .plan-card {
+        padding: 25px;
+      }
+      .plan-card .level {
+        color: var(--cyan);
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .plan-card ul {
+        list-style: none;
+        margin: 16px 0 22px;
+      }
+      .plan-card li {
+        color: var(--muted);
+        padding: 5px 0;
+        font-size: 14px;
+      }
+      .plan-card li::before {
+        content: '→';
+        color: var(--cyan);
+        margin-right: 8px;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+      .field.full {
+        grid-column: 1 / -1;
+      }
+      .field label {
+        color: #c7dfef;
+        font-size: 13px;
+      }
+      .field input,
+      .field select,
+      .field textarea {
+        width: 100%;
+        padding: 12px 13px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: #04182b;
+        color: white;
+        outline: none;
+      }
+      .field input:focus,
+      .field select:focus,
+      .field textarea:focus {
+        border-color: var(--cyan);
+      }
+      .field select option {
+        background: #061c32;
+      }
+      .field textarea {
+        resize: vertical;
+        min-height: 85px;
+      }
+      .form-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 17px;
+      }
+      .workouts-list {
+        display: grid;
+        gap: 12px;
+        margin-top: 23px;
+      }
+      .workout {
+        padding: 17px;
+        border: 1px solid var(--border);
+        border-radius: 13px;
+        background: #07233c;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+      .workout h4 {
+        margin-bottom: 4px;
+      }
+      .workout p {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .workout-actions {
+        display: flex;
+        gap: 7px;
+        flex-shrink: 0;
+      }
+      .empty-state {
+        text-align: center;
+        padding: 28px 10px;
+        color: var(--muted);
+      }
+      .progress-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .progress-card {
+        padding: 23px;
+      }
+      .progress-value {
+        font-size: 31px;
+        color: var(--cyan);
+        font-weight: 900;
+        margin: 8px 0;
+      }
+      .achievement-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 13px;
+      }
+      .achievement {
+        padding: 19px 12px;
+        text-align: center;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        background: #092641;
+      }
+      .achievement .medal {
+        font-size: 30px;
+        filter: grayscale(1);
+        opacity: 0.45;
+      }
+      .achievement.unlocked .medal {
+        filter: none;
+        opacity: 1;
+      }
+      .achievement p {
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 5px;
+      }
+      .cta {
+        padding: 46px;
+        border-radius: 24px;
+        border: 1px solid var(--border);
+        background: linear-gradient(110deg, #07547a, #06233e 75%);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 25px;
+      }
+      .cta p {
+        color: #d2ebfa;
+        margin-top: 7px;
+      }
+      footer {
+        padding: 38px 0 20px;
+        border-top: 1px solid var(--border);
+        background: #020e1d;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 35px;
+      }
+      .footer-links {
+        display: grid;
+        gap: 8px;
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .footer-links a:hover {
+        color: var(--cyan);
+      }
+      .copyright {
+        border-top: 1px solid var(--border);
+        margin-top: 30px;
+        padding-top: 17px;
+        color: #7794aa;
+        font-size: 12px;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 300;
+        background: rgba(0, 8, 18, 0.82);
+        backdrop-filter: blur(8px);
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .modal.open {
+        display: flex;
+      }
+      .modal-box {
+        width: min(430px, 100%);
+        padding: 27px;
+        position: relative;
+      }
+      .modal-close {
+        position: absolute;
+        top: 12px;
+        right: 15px;
+        background: none;
+        border: 0;
+        color: white;
+        font-size: 27px;
+      }
+      .modal-box h2 {
+        margin-bottom: 8px;
+      }
+      .modal-box form {
+        display: grid;
+        gap: 14px;
+        margin-top: 22px;
+      }
+      .notice {
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 13px;
+      }
+      .toast {
+        position: fixed;
+        bottom: 22px;
+        right: 22px;
+        z-index: 400;
+        background: #0a4261;
+        color: white;
+        border: 1px solid var(--cyan);
+        border-radius: 12px;
+        padding: 13px 18px;
+        opacity: 0;
+        transform: translateY(15px);
+        pointer-events: none;
+        transition: 0.25s;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      @media (max-width: 950px) {
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 72px;
+          left: 0;
+          right: 0;
+          background: #04182b;
+          padding: 20px 4%;
+          flex-direction: column;
+          align-items: flex-start;
+          border-bottom: 1px solid var(--border);
+        }
+        .nav-links.open {
+          display: flex;
+        }
+        .menu-toggle {
+          display: block;
+        }
+        .nav-actions .btn:not(.btn-primary) {
+          display: none;
+        }
+        .styles-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .about-layout,
+        .two-columns {
+          grid-template-columns: 1fr;
+        }
+        .plans-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 600px) {
+        section {
+          padding: 54px 0;
+        }
+        .hero {
+          min-height: 480px;
+          background-position: 58% center;
+        }
+        .hero-content {
+          padding: 70px 0 90px;
+        }
+        .hero h1 {
+          letter-spacing: -1px;
+        }
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .features-grid,
+        .styles-grid,
+        .plans-grid,
+        .progress-grid {
+          grid-template-columns: 1fr;
+        }
+        .achievement-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .mini-grid {
+          grid-template-columns: 1fr;
+        }
+        .cta {
+          padding: 26px;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .footer-grid > div:first-child {
+          grid-column: 1 / -1;
+        }
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .field.full {
+          grid-column: auto;
+        }
+        .workout {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        .workout-actions {
+          flex-wrap: wrap;
+        }
+        .nav-actions .btn-primary {
+          padding: 9px 12px;
+          font-size: 12px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="container nav">
+        <a class="logo" href="#home">
+          <span class="logo-icon">≋</span>
+          <span>SWIMMING<br /><span class="accent">WORLD</span></span>
+        </a>
+
+        <nav class="nav-links" id="navLinks">
+          <a href="#home">Главная</a>
+          <a href="#about">О плавании</a>
+          <a href="#styles">Стили</a>
+          <a href="#training">Тренировки</a>
+          <a href="#diary">Дневник</a>
+          <a href="#progress">Достижения</a>
+        </nav>
+
+        <div class="nav-actions">
+          <button class="btn btn-small" onclick="openModal('loginModal')">
+            Войти
+          </button>
+          <button
+            class="btn btn-primary btn-small"
+            onclick="openModal('registerModal')"
+          >
+            Регистрация
+          </button>
+          <button
+            class="menu-toggle"
+            onclick="toggleMenu()"
+            aria-label="Открыть меню"
+          >
+            ☰
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ГЛАВНАЯ -->
+      <section class="hero" id="home">
+        <div class="container">
+          <div class="hero-content">
+            <div class="eyebrow">Твоя спортивная история начинается здесь</div>
+            <h1>SWIMMING<br /><span>WORLD</span></h1>
+            <div class="hero-subtitle">Твой мир. Твоя вода. Твои рекорды.</div>
+            <p>
+              Плавай к своей цели, записывай тренировки, следи за прогрессом и
+              открывай новые возможности вместе с сообществом пловцов.
+            </p>
+            <div class="hero-buttons">
+              <a class="btn btn-primary" href="#diary"
+                >Начать тренироваться →</a
+              >
+              <button class="btn" onclick="openModal('registerModal')">
+                Создать аккаунт
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container stats-strip">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <strong id="heroDistance">0 м</strong><span>Моя дистанция</span>
+          </div>
+          <div class="stat-card">
+            <strong id="heroSessions">0</strong><span>Тренировок</span>
+          </div>
+          <div class="stat-card">
+            <strong id="heroMinutes">0</strong><span>Минут в воде</span>
+          </div>
+          <div class="stat-card">
+            <strong id="heroBadges">0</strong><span>Достижений</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ПРЕИМУЩЕСТВА -->
+      <section>
+        <div class="container">
+          <div class="section-heading">
+            <div class="eyebrow">Всё для твоего прогресса</div>
+            <h2>
+              Тренируйся. <span class="accent">Отслеживай.</span> Побеждай.
+            </h2>
+            <p>
+              Собери свои спортивные достижения в одном месте и преврати каждую
+              тренировку в шаг к цели.
+            </p>
+          </div>
+          <div class="features-grid">
+            <article class="card">
+              <div class="card-body">
+                <div class="icon-box">📊</div>
+                <h3>Личный прогресс</h3>
+                <p>
+                  Смотри общую дистанцию, время тренировок и собственные
+                  результаты.
+                </p>
+              </div>
+            </article>
+            <article class="card">
+              <div class="card-body">
+                <div class="icon-box">📓</div>
+                <h3>Спортивный дневник</h3>
+                <p>
+                  Записывай каждое занятие, выбранный стиль, дистанцию и
+                  самочувствие.
+                </p>
+              </div>
+            </article>
+            <article class="card">
+              <div class="card-body">
+                <div class="icon-box">🏆</div>
+                <h3>Новые достижения</h3>
+                <p>Выполняй цели, отмечай личные рекорды и открывай награды.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- О ПЛАВАНИИ -->
+      <section class="split-section" id="about">
+        <div class="container about-layout">
+          <div>
+            <div class="section-heading">
+              <div class="eyebrow">Познакомься с водной стихией</div>
+              <h2>Мир <span class="accent">плавания</span></h2>
+              <p>
+                Плавание — вид физической активности и спорта, в котором человек
+                перемещается в воде благодаря движениям рук и ног. Оно помогает
+                развивать выносливость, координацию и силу.
+              </p>
+            </div>
+            <ul class="check-list">
+              <li>Развивает выносливость и координацию.</li>
+              <li>Задействует мышцы всего тела.</li>
+              <li>Помогает формировать привычку к регулярным тренировкам.</li>
+              <li>Подходит для спорта, отдыха и активного образа жизни.</li>
+            </ul>
+            <p class="muted">
+              Спортивное плавание входит в программу современных Олимпийских
+              игр. В бассейне соревнуются в четырёх основных способах плавания.
+            </p>
+          </div>
+          <img
+            class="about-image"
+            src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=1100&q=85"
+            alt="Голубая вода спортивного бассейна"
+            loading="lazy"
+          />
+        </div>
+      </section>
+
+      <!-- СТИЛИ -->
+      <section id="styles">
+        <div class="container">
+          <div class="section-heading">
+            <div class="eyebrow">Найди свой стиль</div>
+            <h2>4 стиля <span class="accent">плавания</span></h2>
+            <p>
+              Каждый стиль отличается техникой движений, дыханием и требованиями
+              к подготовке.
+            </p>
+          </div>
+
+          <div class="styles-grid">
+            <article class="card style-card">
+              <img
+                class="card-img"
+                src="https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=700&q=85"
+                alt="Пловец в бассейне"
+                loading="lazy"
+              />
+              <div class="card-body">
+                <div class="style-number">STYLE 01</div>
+                <h3>Кроль на груди</h3>
+                <span class="tag">Скорость</span>
+                <p>
+                  Руки работают попеременно, ноги выполняют быстрые движения
+                  вверх-вниз. Для вдоха голова поворачивается в сторону.
+                </p>
+              </div>
+            </article>
+
+            <article class="card style-card">
+              <img
+                class="card-img"
+                src="https://images.unsplash.com/photo-1519315901367-f34ff9154487?auto=format&fit=crop&w=700&q=85"
+                alt="Тренировка в бассейне"
+                loading="lazy"
+              />
+              <div class="card-body">
+                <div class="style-number">STYLE 02</div>
+                <h3>На спине</h3>
+                <span class="tag">Положение тела</span>
+                <p>
+                  Пловец лежит на спине, поочерёдно вращает руками и работает
+                  ногами. Важно держать тело ровно.
+                </p>
+              </div>
+            </article>
+
+            <article class="card style-card">
+              <img
+                class="card-img"
+                src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=700&q=85"
+                alt="Вода в плавательном бассейне"
+                loading="lazy"
+              />
+              <div class="card-body">
+                <div class="style-number">STYLE 03</div>
+                <h3>Брасс</h3>
+                <span class="tag">Координация</span>
+                <p>
+                  Руки и ноги движутся симметрично. Нужно согласовать гребок,
+                  толчок ногами, вдох и скольжение.
+                </p>
+              </div>
+            </article>
+
+            <article class="card style-card">
+              <img
+                class="card-img"
+                src="https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=700&q=85"
+                alt="Спортивное плавание"
+                loading="lazy"
+              />
+              <div class="card-body">
+                <div class="style-number">STYLE 04</div>
+                <h3>Баттерфляй</h3>
+                <span class="tag">Сила и техника</span>
+                <p>
+                  Обе руки одновременно проносятся над водой, а ноги выполняют
+                  волнообразные движения. Стиль требует координации.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ПОЛЬЗА И СОВЕТЫ -->
+      <section class="split-section">
+        <div class="container two-columns">
+          <div>
+            <div class="section-heading">
+              <div class="eyebrow">Почему стоит плавать</div>
+              <h2>Польза <span class="accent">плавания</span></h2>
+              <p>
+                Регулярные занятия с подходящей нагрузкой помогают поддерживать
+                физическую форму.
+              </p>
+            </div>
+            <div class="mini-grid">
+              <div class="mini-card">
+                <strong>❤️ Выносливость</strong>
+                <p>Развитие аэробной выносливости.</p>
+              </div>
+              <div class="mini-card">
+                <strong>💪 Мышцы</strong>
+                <p>Работа мышц рук, ног, спины и корпуса.</p>
+              </div>
+              <div class="mini-card">
+                <strong>🧘 Расслабление</strong>
+                <p>Спокойное плавание может помогать снять напряжение.</p>
+              </div>
+              <div class="mini-card">
+                <strong>🎯 Координация</strong>
+                <p>Контроль движений и положения тела в воде.</p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="section-heading">
+              <div class="eyebrow">Начни с простого</div>
+              <h2>Советы <span class="accent">новичкам</span></h2>
+              <p>
+                Не обязательно сразу плавать быстро или преодолевать большие
+                дистанции.
+              </p>
+            </div>
+            <div class="mini-grid">
+              <div class="mini-card">
+                <strong>01. Постепенность</strong>
+                <p>
+                  Начинай с комфортной нагрузки и отдыхай при необходимости.
+                </p>
+              </div>
+              <div class="mini-card">
+                <strong>02. Техника</strong>
+                <p>Освой дыхание и положение тела прежде, чем ускоряться.</p>
+              </div>
+              <div class="mini-card">
+                <strong>03. Безопасность</strong>
+                <p>
+                  Не плавай в одиночку. Новичкам нужен надзор инструктора или
+                  спасателя.
+                </p>
+              </div>
+              <div class="mini-card">
+                <strong>04. Дневник</strong>
+                <p>Записывай дистанцию, время и ощущения после занятий.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ТРЕНИРОВКИ -->
+      <section id="training">
+        <div class="container">
+          <div class="section-heading">
+            <div class="eyebrow">Выбери свой уровень</div>
+            <h2>Планы <span class="accent">тренировок</span></h2>
+            <p>
+              Примеры занятий для планирования. Подбирай нагрузку под свою
+              подготовку и самочувствие.
+            </p>
+          </div>
+          <div class="plans-grid">
+            <article class="card plan-card">
+              <div class="card-body">
+                <div class="level">Уровень 01</div>
+                <h3>🌱 Новичок</h3>
+                <p>Знакомство с водой и освоение базовой техники.</p>
+                <ul>
+                  <li>5–10 минут лёгкой разминки</li>
+                  <li>Тренировка дыхания</li>
+                  <li>Короткие отрезки в комфортном темпе</li>
+                  <li>Спокойное завершение занятия</li>
+                </ul>
+                <button
+                  class="btn btn-small"
+                  onclick="usePlan('Новичок', 400, 20)"
+                >
+                  Добавить в дневник
+                </button>
+              </div>
+            </article>
+            <article class="card plan-card">
+              <div class="card-body">
+                <div class="level">Уровень 02</div>
+                <h3>🌊 Средний</h3>
+                <p>Развитие выносливости и улучшение техники.</p>
+                <ul>
+                  <li>Лёгкая разминка</li>
+                  <li>Упражнения на технику</li>
+                  <li>Несколько отрезков в своём темпе</li>
+                  <li>Восстановительное плавание</li>
+                </ul>
+                <button
+                  class="btn btn-small"
+                  onclick="usePlan('Средний', 800, 35)"
+                >
+                  Добавить в дневник
+                </button>
+              </div>
+            </article>
+            <article class="card plan-card">
+              <div class="card-body">
+                <div class="level">Уровень 03</div>
+                <h3>🏆 Продвинутый</h3>
+                <p>Работа над темпом, дистанцией и эффективностью.</p>
+                <ul>
+                  <li>Разминка и технические упражнения</li>
+                  <li>Основная серия отрезков</li>
+                  <li>Контроль темпа и отдыха</li>
+                  <li>Заминка</li>
+                </ul>
+                <button
+                  class="btn btn-small"
+                  onclick="usePlan('Продвинутый', 1500, 50)"
+                >
+                  Добавить в дневник
+                </button>
+              </div>
+            </article>
+          </div>
+          <p class="notice">
+            Указанные дистанции и время — демонстрационные примеры, а не
+            обязательная норма. Если ты только учишься плавать, занимайся под
+            руководством инструктора.
+          </p>
+        </div>
+      </section>
+
+      <!-- ДНЕВНИК -->
+      <section class="split-section" id="diary">
+        <div class="container">
+          <div class="section-heading">
+            <div class="eyebrow">Твой личный журнал</div>
+            <h2>Спортивный <span class="accent">дневник</span></h2>
+            <p>
+              Добавляй занятия и возвращайся к своим результатам в любое время
+              на этом устройстве.
+            </p>
+          </div>
+
+          <div class="panel">
+            <h3 id="formTitle">＋ Записать тренировку</h3>
+            <form id="workoutForm">
+              <div class="form-grid" style="margin-top: 20px">
+                <div class="field">
+                  <label for="workoutDate">Дата</label>
+                  <input id="workoutDate" type="date" required />
+                </div>
+                <div class="field">
+                  <label for="workoutStyle">Стиль плавания</label>
+                  <select id="workoutStyle">
+                    <option>Кроль на груди</option>
+                    <option>На спине</option>
+                    <option>Брасс</option>
+                    <option>Баттерфляй</option>
+                    <option>Смешанный стиль</option>
+                    <option>Обучение плаванию</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="workoutDistance">Дистанция (метры)</label>
+                  <input
+                    id="workoutDistance"
+                    type="number"
+                    min="0"
+                    max="100000"
+                    placeholder="Например, 800"
+                    required
+                  />
+                </div>
+                <div class="field">
+                  <label for="workoutMinutes">Время (минуты)</label>
+                  <input
+                    id="workoutMinutes"
+                    type="number"
+                    min="1"
+                    max="1440"
+                    placeholder="Например, 30"
+                    required
+                  />
+                </div>
+                <div class="field full">
+                  <label for="workoutFeeling">Заметки и самочувствие</label>
+                  <textarea
+                    id="workoutFeeling"
+                    maxlength="500"
+                    placeholder="Как прошла тренировка? Что получилось лучше всего?"
+                  ></textarea>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button
+                  class="btn btn-primary"
+                  id="saveWorkoutBtn"
+                  type="submit"
+                >
+                  Сохранить тренировку
+                </button>
+                <button class="btn" type="reset" onclick="cancelEdit()">
+                  Очистить
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div
+            style="
+              margin-top: 30px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 15px;
+              flex-wrap: wrap;
+            "
+          >
+            <h3>Мои тренировки</h3>
+            <button class="btn btn-small btn-danger" onclick="clearWorkouts()">
+              Очистить дневник
+            </button>
+          </div>
+          <div id="workoutsList" class="workouts-list"></div>
+        </div>
+      </section>
+
+      <!-- ПРОГРЕСС -->
+      <section id="progress">
+        <div class="container">
+          <div class="section-heading">
+            <div class="eyebrow">Каждый метр имеет значение</div>
+            <h2>Твой <span class="accent">прогресс</span></h2>
+            <p>
+              Результаты рассчитываются автоматически на основе записей в
+              спортивном дневнике.
+            </p>
+          </div>
+
+          <div class="progress-grid">
+            <div class="panel progress-card">
+              <p class="muted">Общая дистанция</p>
+              <div class="progress-value" id="totalDistance">0 м</div>
+              <p class="muted">Все записанные занятия</p>
+            </div>
+            <div class="panel progress-card">
+              <p class="muted">Время тренировок</p>
+              <div class="progress-value" id="totalTime">0 мин</div>
+              <p class="muted">Суммарное время в дневнике</p>
+            </div>
+            <div class="panel progress-card">
+              <p class="muted">Количество занятий</p>
+              <div class="progress-value" id="totalWorkouts">0</div>
+              <p class="muted">Записанные тренировки</p>
+            </div>
+          </div>
+
+          <div class="section-heading" style="margin-top: 38px">
+            <h2>🏅 Мои достижения</h2>
+            <p>Добавляй тренировки и открывай новые значки.</p>
+          </div>
+          <div class="achievement-grid">
+            <div class="achievement" id="badge1">
+              <div class="medal">🌟</div>
+              <strong>Первый заплыв</strong>
+              <p>Запиши первую тренировку</p>
+            </div>
+            <div class="achievement" id="badge2">
+              <div class="medal">💧</div>
+              <strong>500 метров</strong>
+              <p>Набери 500 м суммарно</p>
+            </div>
+            <div class="achievement" id="badge3">
+              <div class="medal">🔥</div>
+              <strong>Постоянство</strong>
+              <p>Запиши 5 тренировок</p>
+            </div>
+            <div class="achievement" id="badge4">
+              <div class="medal">🏆</div>
+              <strong>Мастер воды</strong>
+              <p>Набери 5000 м суммарно</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section>
+        <div class="container">
+          <div class="cta">
+            <div>
+              <div class="eyebrow">Твоя история начинается сегодня</div>
+              <h2>Готова к новому <span class="accent">рекорду?</span></h2>
+              <p>
+                Создай свой план, записывай тренировки и двигайся к цели шаг за
+                шагом.
+              </p>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap">
+              <button
+                class="btn btn-primary"
+                onclick="openModal('registerModal')"
+              >
+                Создать аккаунт
+              </button>
+              <a class="btn" href="#diary">Мой дневник</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <a class="logo" href="#home"
+              ><span class="logo-icon">≋</span
+              ><span>SWIMMING<br /><span class="accent">WORLD</span></span></a
+            >
+            <p class="muted" style="margin-top: 15px">
+              Твой мир. Твоя вода. Твои рекорды.
+            </p>
+            <p class="muted" style="font-size: 13px; margin-top: 8px">
+              Плавай с удовольствием и достигай новых высот.
+            </p>
+          </div>
+          <div>
+            <strong>Навигация</strong>
+            <div class="footer-links">
+              <a href="#home">Главная</a><a href="#about">О плавании</a>
+              <a href="#styles">Стили плавания</a
+              ><a href="#training">Тренировки</a>
+              <a href="#diary">Дневник</a>
+            </div>
+          </div>
+          <div>
+            <strong>Полезное</strong>
+            <div class="footer-links">
+              <a href="#about">Польза плавания</a
+              ><a href="#training">Планы тренировок</a>
+              <a href="#progress">Достижения</a
+              ><a href="#styles">Техника плавания</a>
+            </div>
+          </div>
+        </div>
+        <div class="copyright">
+          © 2026 Swimming World. Учебный демонстрационный проект.
+        </div>
+      </div>
+    </footer>
+
+    <!-- РЕГИСТРАЦИЯ -->
+    <div
+      class="modal"
+      id="registerModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="registerTitle"
+    >
+      <div class="modal-box panel">
+        <button
+          class="modal-close"
+          onclick="closeModal('registerModal')"
+          aria-label="Закрыть"
+        >
+          ×
+        </button>
+        <div class="eyebrow">Присоединяйся к сообществу</div>
+        <h2 id="registerTitle">Создать аккаунт</h2>
+        <p class="muted">Начни свою спортивную историю.</p>
+        <form id="registerForm">
+          <div class="field">
+            <label for="regName">Твоё имя</label
+            ><input
+              id="regName"
+              maxlength="50"
+              required
+              placeholder="Как тебя зовут?"
+            />
+          </div>
+          <div class="field">
+            <label for="regEmail">Электронная почта</label
+            ><input
+              id="regEmail"
+              type="email"
+              required
+              placeholder="you@example.com"
+            />
+          </div>
+          <div class="field">
+            <label for="regPassword">Пароль</label
+            ><input
+              id="regPassword"
+              type="password"
+              minlength="8"
+              required
+              placeholder="Не менее 8 символов"
+            />
+          </div>
+          <button class="btn btn-primary" type="submit">
+            Зарегистрироваться
+          </button>
+        </form>
+        <p class="notice">
+          Демонстрационная регистрация сохраняет данные только в этом браузере.
+          Не используй настоящий пароль.
+        </p>
+      </div>
+    </div>
+
+    <!-- ВХОД -->
+    <div
+      class="modal"
+      id="loginModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="loginTitle"
+    >
+      <div class="modal-box panel">
+        <button
+          class="modal-close"
+          onclick="closeModal('loginModal')"
+          aria-label="Закрыть"
+        >
+          ×
+        </button>
+        <div class="eyebrow">Рады снова видеть тебя</div>
+        <h2 id="loginTitle">Войти в аккаунт</h2>
+        <form id="loginForm">
+          <div class="field">
+            <label for="loginEmail">Электронная почта</label
+            ><input id="loginEmail" type="email" required />
+          </div>
+          <div class="field">
+            <label for="loginPassword">Пароль</label
+            ><input id="loginPassword" type="password" required />
+          </div>
+          <button class="btn btn-primary" type="submit">Войти</button>
+        </form>
+        <p class="notice">
+          Вход работает только для аккаунта, созданного в этом браузере на этом
+          устройстве.
+        </p>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+      const safeRead = (key, fallback) => {
+        try {
+          const value = localStorage.getItem(key);
+          return value ? JSON.parse(value) : fallback;
+        } catch {
+          return fallback;
+        }
+      };
+
+      let workouts = safeRead('sw_world_workouts', []);
+      let users = safeRead('sw_world_users', []);
+      let currentUser = safeRead('sw_world_current_user', null);
+      let editingId = null;
+      let selectedPlan = null;
+
+      function saveWorkouts() {
+        localStorage.setItem('sw_world_workouts', JSON.stringify(workouts));
+      }
+      function toast(message) {
+        const el = $('toast');
+        el.textContent = message;
+        el.classList.add('show');
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+      }
+      function openModal(id) {
+        $(id).classList.add('open');
+      }
+      function closeModal(id) {
+        $(id).classList.remove('open');
+      }
+      function toggleMenu() {
+        $('navLinks').classList.toggle('open');
+      }
+      document.querySelectorAll('.nav-links a').forEach((link) => {
+        link.addEventListener('click', () =>
+          $('navLinks').classList.remove('open')
+        );
+      });
+      document.querySelectorAll('.modal').forEach((modal) => {
+        modal.addEventListener('click', (event) => {
+          if (event.target === modal) modal.classList.remove('open');
+        });
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape')
+          document
+            .querySelectorAll('.modal')
+            .forEach((m) => m.classList.remove('open'));
+      });
+
+      function usePlan(level, distance, minutes) {
+        selectedPlan = { level, distance, minutes };
+        $('workoutDistance').value = distance;
+        $('workoutMinutes').value = minutes;
+        $('workoutFeeling').value = 'План тренировки: ' + level;
+        $('workoutStyle').value = 'Смешанный стиль';
+        $('workoutDate').value = new Date().toISOString().slice(0, 10);
+        $('diary').scrollIntoView({ behavior: 'smooth' });
+        toast('План выбран! Проверь параметры и сохрани тренировку.');
+      }
+
+      $('workoutDate').value = new Date().toISOString().slice(0, 10);
+
+      $('workoutForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const distance = Number($('workoutDistance').value);
+        const minutes = Number($('workoutMinutes').value);
+
+        if (
+          !Number.isFinite(distance) ||
+          distance < 0 ||
+          distance > 100000 ||
+          !Number.isFinite(minutes) ||
+          minutes < 1 ||
+          minutes > 1440
+        ) {
+          toast('Проверь дистанцию и время тренировки.');
+          return;
+        }
+
+        const workout = {
+          id: editingId || Date.now() + Math.random(),
+          date: $('workoutDate').value,
+          style: $('workoutStyle').value,
+          distance,
+          minutes,
+          feeling: $('workoutFeeling').value.trim(),
+        };
+
+        if (editingId !== null) {
+          workouts = workouts.map((item) =>
+            item.id === editingId ? workout : item
+          );
+          toast('Тренировка обновлена!');
+        } else {
+          workouts.push(workout);
+          toast('Тренировка сохранена! Отличная работа 💙');
+        }
+
+        saveWorkouts();
+        resetEditor();
+        renderAll();
+      });
+
+      function editWorkout(id) {
+        const workout = workouts.find((item) => item.id === id);
+        if (!workout) return;
+
+        editingId = id;
+        $('formTitle').textContent = '✎ Редактировать тренировку';
+        $('saveWorkoutBtn').textContent = 'Сохранить изменения';
+        $('workoutDate').value = workout.date;
+        $('workoutStyle').value = workout.style;
+        $('workoutDistance').value = workout.distance;
+        $('workoutMinutes').value = workout.minutes;
+        $('workoutFeeling').value = workout.feeling || '';
+        $('diary').scrollIntoView({ behavior: 'smooth' });
+      }
+
+      function resetEditor() {
+        editingId = null;
+        $('formTitle').textContent = '＋ Записать тренировку';
+        $('saveWorkoutBtn').textContent = 'Сохранить тренировку';
+        $('workoutForm').reset();
+        $('workoutDate').value = new Date().toISOString().slice(0, 10);
+      }
+      function cancelEdit() {
+        resetEditor();
+      }
+      function deleteWorkout(id) {
+        if (!confirm('Удалить эту тренировку?')) return;
+        workouts = workouts.filter((item) => item.id !== id);
+        saveWorkouts();
+        if (editingId === id) resetEditor();
+        renderAll();
+        toast('Тренировка удалена.');
+      }
+      function clearWorkouts() {
+        if (!workouts.length) {
+          toast('Дневник уже пуст.');
+          return;
+        }
+        if (
+          !confirm('Удалить все записи дневника? Это действие нельзя отменить.')
+        )
+          return;
+        workouts = [];
+        saveWorkouts();
+        resetEditor();
+        renderAll();
+        toast('Дневник очищен.');
+      }
+      function formatNumber(value) {
+        return new Intl.NumberFormat('ru-RU').format(value);
+      }
+      function escapeHTML(value) {
+        return String(value).replace(
+          /[&<>"']/g,
+          (char) =>
+            ({
+              '&': '&amp;',
+              '<': '&lt;',
+              '>': '&gt;',
+              '"': '&quot;',
+              "'": '&#39;',
+            }[char])
+        );
+      }
+
+      function renderWorkouts() {
+        const list = $('workoutsList');
+        const sorted = [...workouts].sort((a, b) =>
+          b.date.localeCompare(a.date)
+        );
+
+        if (!sorted.length) {
+          list.innerHTML =
+            '<div class="empty-state panel">🌊<br><strong>Твой дневник пока пуст</strong><br>Добавь первую тренировку, чтобы увидеть свой прогресс.</div>';
+          return;
+        }
+
+        list.innerHTML = sorted
+          .map(
+            (w) => `
+    <article class="workout">
+      <div>
+        <h4>${escapeHTML(w.style)}</h4>
+        <p>${escapeHTML(w.date)} · ${formatNumber(
+              w.distance
+            )} м · ${formatNumber(w.minutes)} мин</p>
+        ${
+          w.feeling
+            ? `<p style="margin-top:6px">${escapeHTML(w.feeling)}</p>`
+            : ''
+        }
+      </div>
+      <div class="workout-actions">
+        <button class="btn btn-small" onclick="editWorkout(${Number(
+          w.id
+        )})">Изменить</button>
+        <button class="btn btn-small btn-danger" onclick="deleteWorkout(${Number(
+          w.id
+        )})">Удалить</button>
+      </div>
+    </article>
+  `
+          )
+          .join('');
+      }
+
+      function renderProgress() {
+        const distance = workouts.reduce(
+          (sum, w) => sum + Number(w.distance || 0),
+          0
+        );
+        const minutes = workouts.reduce(
+          (sum, w) => sum + Number(w.minutes || 0),
+          0
+        );
+        const count = workouts.length;
+
+        $('totalDistance').textContent = formatNumber(distance) + ' м';
+        $('totalTime').textContent = formatNumber(minutes) + ' мин';
+        $('totalWorkouts').textContent = formatNumber(count);
+        $('heroDistance').textContent = formatNumber(distance) + ' м';
+        $('heroSessions').textContent = formatNumber(count);
+        $('heroMinutes').textContent = formatNumber(minutes);
+
+        const achievements = [
+          count >= 1,
+          distance >= 500,
+          count >= 5,
+          distance >= 5000,
+        ];
+        achievements.forEach((unlocked, index) => {
+          $('badge' + (index + 1)).classList.toggle('unlocked', unlocked);
+        });
+        $('heroBadges').textContent = achievements.filter(Boolean).length;
+      }
+
+      function renderAll() {
+        renderWorkouts();
+        renderProgress();
+      }
+
+      $('registerForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const name = $('regName').value.trim();
+        const email = $('regEmail').value.trim().toLowerCase();
+        const password = $('regPassword').value;
+
+        if (users.some((user) => user.email === email)) {
+          toast('Аккаунт с такой почтой уже существует.');
+          return;
+        }
+
+        // Только демонстрация: это НЕ безопасная система авторизации.
+        users.push({ name, email, password });
+        localStorage.setItem('sw_world_users', JSON.stringify(users));
+        currentUser = { name, email };
+        localStorage.setItem(
+          'sw_world_current_user',
+          JSON.stringify(currentUser)
+        );
+
+        closeModal('registerModal');
+        $('registerForm').reset();
+        updateAccountUI();
+        toast('Добро пожаловать в Swimming World, ' + name + '!');
+      });
+
+      $('loginForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const email = $('loginEmail').value.trim().toLowerCase();
+        const password = $('loginPassword').value;
+        const user = users.find(
+          (item) => item.email === email && item.password === password
+        );
+
+        if (!user) {
+          toast('Неверная почта или пароль. Проверь данные.');
+          return;
+        }
+
+        currentUser = { name: user.name, email: user.email };
+        localStorage.setItem(
+          'sw_world_current_user',
+          JSON.stringify(currentUser)
+        );
+        closeModal('loginModal');
+        $('loginForm').reset();
+        updateAccountUI();
+        toast('С возвращением, ' + user.name + '!');
+      });
+
+      function updateAccountUI() {
+        const registerButton = document.querySelector(
+          '.nav-actions .btn-primary'
+        );
+        if (currentUser) {
+          registerButton.textContent = currentUser.name.split(' ')[0];
+          registerButton.onclick = () => {
+            if (
+              confirm(
+                'Ты вошла как ' + currentUser.name + '. Выйти из аккаунта?'
+              )
+            ) {
+              currentUser = null;
+              localStorage.removeItem('sw_world_current_user');
+              updateAccountUI();
+              toast('Ты вышла из аккаунта.');
+            }
+          };
+        } else {
+          registerButton.textContent = 'Регистрация';
+          registerButton.onclick = () => openModal('registerModal');
+        }
+      }
+
+      renderAll();
+      updateAccountUI();
+    </script>
+  </body>
+</html>
